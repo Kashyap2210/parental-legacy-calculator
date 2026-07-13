@@ -1,108 +1,225 @@
 import {
-  HiOutlineUserGroup,
-  HiOutlineHeart,
+  HiOutlineUser,
+  HiOutlineUsers,
   HiOutlineChartBar,
+  HiOutlineScale,
+  HiOutlineArrowTrendingUp,
 } from "react-icons/hi2";
 import Container from "@/components/ui/Container";
 import SectionTitle from "@/components/ui/SectionTitle";
 import Card from "@/components/cards/Card";
 import Badge from "@/components/ui/Badge";
-import EmptyState from "@/components/ui/EmptyState";
-
-const features = [
-  {
-    icon: HiOutlineUserGroup,
-    title: "Family Background",
-    description:
-      "Analyze the foundational elements that shape each parent's approach to raising a family.",
-  },
-  {
-    icon: HiOutlineHeart,
-    title: "Generational Impact",
-    description:
-      "Understand how life choices and values pass from one generation to the next.",
-  },
-  {
-    icon: HiOutlineChartBar,
-    title: "Legacy Insights",
-    description:
-      "Visualize the cumulative influence of key factors on parental legacy scores.",
-  },
-];
+import Input from "@/components/forms/Input";
+import StatCard from "@/components/cards/StatCard";
+import { useCalculator } from "@/hooks/useCalculator";
 
 function Home() {
+  const { selectedDate, results, errors, handleDateChange } = useCalculator();
+
+  const dateError = errors.length > 0 ? errors[0].message : undefined;
+
   return (
-    <div className="space-y-24 py-16 sm:space-y-32 sm:py-24">
+    <div className="space-y-16 py-12 sm:space-y-24 sm:py-20">
       {/* ── Hero Section ── */}
       <section aria-labelledby="hero-heading">
         <Container className="text-center">
           <Badge variant="info" className="mb-6">
-            Phase 2 — Design System
+            Legacy Calculator
           </Badge>
 
           <h1
             id="hero-heading"
-            className="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-text sm:text-5xl lg:text-6xl"
+            className="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-text sm:text-5xl"
           >
             Parental Legacy
             <span className="text-primary-600"> Calculator</span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary">
+            Enter a date of birth to generate a deterministic legacy report.
             Explore how family background, life choices, and key factors shape
-            parental legacy across generations. A data-driven approach to
-            understanding intergenerational influence.
+            parental legacy across generations.
           </p>
         </Container>
       </section>
 
-      {/* ── Features Section ── */}
-      <section aria-labelledby="features-heading">
-        <Container>
-          <SectionTitle
-            title="How It Works"
-            description="Three pillars of analysis that drive the legacy calculation model."
-            align="center"
-            className="mb-12"
-          />
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature) => (
-              <Card
-                key={feature.title}
-                variant="elevated"
-                padding="lg"
-                className="group transition-shadow hover:shadow-lg"
-              >
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary-600 transition-colors group-hover:bg-primary-100">
-                  <feature.icon className="h-6 w-6" aria-hidden="true" />
-                </div>
-                <h3 className="text-lg font-semibold text-text">
-                  {feature.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-                  {feature.description}
-                </p>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* ── Calculator Placeholder ── */}
+      {/* ── Calculator Section ── */}
       <section aria-labelledby="calculator-heading">
         <Container>
           <SectionTitle
             title="Legacy Calculator"
-            description="Enter family details to generate a personalized legacy score analysis."
+            description="Select a date of birth to calculate the legacy report."
             className="mb-8"
           />
 
           <Card variant="outlined" padding="lg">
-            <EmptyState
-              message="Calculator coming in Phase 3"
-              description="The legacy calculator form will be implemented in the next phase. This section will include date pickers, family background inputs, and scoring parameters."
+            <div className="max-w-md">
+              <Input
+                type="date"
+                label="Date of Birth"
+                description="Choose a valid date of birth to generate the report."
+                required
+                value={selectedDate}
+                error={dateError}
+                onChange={(e) => handleDateChange(e.target.value)}
+                aria-describedby={dateError ? "date-error" : "date-description"}
+              />
+            </div>
+          </Card>
+        </Container>
+      </section>
+
+      {/* ── Results Section ── */}
+      {results && (
+        <section aria-labelledby="results-heading">
+          <Container>
+            <SectionTitle
+              title="Results"
+              description="Breakdown of life factors by parental influence."
+              className="mb-8"
             />
+
+            <Card variant="default" padding="none" className="overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-border bg-surface-muted">
+                      <th
+                        scope="col"
+                        className="px-6 py-3 font-semibold text-text"
+                      >
+                        Factor
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-right font-semibold text-primary-600"
+                      >
+                        Mother
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-right font-semibold text-secondary-600"
+                      >
+                        Father
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-right font-semibold text-text"
+                      >
+                        Total
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {results.factors.map((factor, index) => (
+                      <tr
+                        key={factor.id}
+                        className={
+                          index < results.factors.length - 1
+                            ? "border-b border-border"
+                            : undefined
+                        }
+                      >
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-text"
+                        >
+                          {factor.label}
+                        </th>
+                        <td className="px-6 py-4 text-right tabular-nums text-primary-600">
+                          {factor.mother.toFixed(3)}
+                        </td>
+                        <td className="px-6 py-4 text-right tabular-nums text-secondary-600">
+                          {factor.father.toFixed(3)}
+                        </td>
+                        <td className="px-6 py-4 text-right tabular-nums text-text-secondary">
+                          {factor.total.toFixed(3)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Card>
+          </Container>
+        </section>
+      )}
+
+      {/* ── Summary Section ── */}
+      {results && (
+        <section aria-labelledby="summary-heading">
+          <Container>
+            <SectionTitle
+              title="Summary"
+              description="Aggregated legacy totals and dominant parental influence."
+              className="mb-8"
+            />
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <StatCard
+                title="Mother Total"
+                value={results.totals.mother.toFixed(3)}
+                icon={<HiOutlineUser />}
+                accentColor="primary"
+              />
+              <StatCard
+                title="Father Total"
+                value={results.totals.father.toFixed(3)}
+                icon={<HiOutlineUser />}
+                accentColor="secondary"
+              />
+              <StatCard
+                title="Grand Total"
+                value={results.totals.grand.toFixed(3)}
+                icon={<HiOutlineUsers />}
+                accentColor="neutral"
+              />
+              <StatCard
+                title="Dominant Parent"
+                value={
+                  results.dominantParent === "mother" ? "Mother" : "Father"
+                }
+                icon={<HiOutlineScale />}
+                accentColor={
+                  results.dominantParent === "mother" ? "primary" : "secondary"
+                }
+              />
+              <StatCard
+                title="Difference"
+                value={results.totals.difference.toFixed(3)}
+                icon={<HiOutlineArrowTrendingUp />}
+                accentColor="neutral"
+              />
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {/* ── Charts Placeholder ── */}
+      <section aria-labelledby="charts-heading">
+        <Container>
+          <SectionTitle
+            title="Visualizations"
+            description="Charts and graphs will be added in a future phase."
+            className="mb-8"
+          />
+
+          <Card variant="outlined" padding="lg">
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <div
+                className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-surface-muted"
+                aria-hidden="true"
+              >
+                <HiOutlineChartBar className="h-8 w-8 text-text-muted" />
+              </div>
+              <h3 className="text-lg font-semibold text-text">
+                Charts coming soon
+              </h3>
+              <p className="mt-1 max-w-sm text-sm text-text-muted">
+                Data visualizations including pie charts and bar graphs will be
+                implemented in the next phase.
+              </p>
+            </div>
           </Card>
         </Container>
       </section>
