@@ -1,5 +1,6 @@
 import type { FactorResult, CalculationTotals } from "@/types/calculator";
-import { THEME } from "@/constants/theme";
+import type { ThemeMode } from "@/types/theme";
+import { getThemeColors } from "@/constants/theme";
 
 interface BarChartDataPoint {
   name: string;
@@ -21,17 +22,22 @@ function buildBarChartData(factors: FactorResult[]): BarChartDataPoint[] {
   }));
 }
 
-function buildPieChartData(totals: CalculationTotals): PieChartDataPoint[] {
+function buildPieChartData(
+  totals: CalculationTotals,
+  mode: ThemeMode,
+): PieChartDataPoint[] {
+  const colors = getThemeColors(mode);
+
   return [
     {
       name: "Mother",
       value: totals.mother,
-      color: THEME.colors.chart.mother,
+      color: colors.chart.mother,
     },
     {
       name: "Father",
       value: totals.father,
-      color: THEME.colors.chart.father,
+      color: colors.chart.father,
     },
   ];
 }

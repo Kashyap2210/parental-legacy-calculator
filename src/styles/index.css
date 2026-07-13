@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* ── Color Palette ── */
   --color-primary-50: oklch(0.97 0.02 250);
@@ -108,16 +110,42 @@
   }
 }
 
-/* ── CSS Custom Properties ── */
+/* ── Light Mode (default) ── */
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --border-color: #e2e8f0;
-  --border-hover: #cbd5e1;
+  --bg-primary: oklch(1 0 0);
+  --bg-secondary: oklch(0.98 0.005 250);
+  --bg-tertiary: oklch(0.965 0.005 250);
+  --text-primary: oklch(0.18 0.01 255);
+  --text-secondary: oklch(0.37 0.015 255);
+  --text-muted: oklch(0.64 0.01 255);
+  --border-color: oklch(0.92 0.005 250);
+  --border-hover: oklch(0.87 0.008 250);
+}
+
+/* ── Dark Mode ── */
+.dark {
+  --bg-primary: oklch(0.185 0.012 260);
+  --bg-secondary: oklch(0.21 0.013 260);
+  --bg-tertiary: oklch(0.25 0.014 260);
+  --text-primary: oklch(0.93 0.005 250);
+  --text-secondary: oklch(0.72 0.01 250);
+  --text-muted: oklch(0.55 0.012 250);
+  --border-color: oklch(0.26 0.012 260);
+  --border-hover: oklch(0.33 0.014 260);
+}
+
+/* ── Dark Mode Shadows ── */
+.dark {
+  --shadow-sm: 0 1px 2px 0 oklch(0 0 0 / 0.3);
+  --shadow-md:
+    0 4px 6px -1px oklch(0 0 0 / 0.4),
+    0 2px 4px -2px oklch(0 0 0 / 0.3);
+  --shadow-lg:
+    0 10px 15px -3px oklch(0 0 0 / 0.5),
+    0 4px 6px -4px oklch(0 0 0 / 0.3);
+  --shadow-xl:
+    0 20px 25px -5px oklch(0 0 0 / 0.6),
+    0 8px 10px -6px oklch(0 0 0 / 0.4);
 }
 
 /* ── Accessibility ── */

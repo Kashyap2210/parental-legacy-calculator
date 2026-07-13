@@ -82,12 +82,4 @@ function clear(): void {
   }
 }
 
-function hasData(): boolean {
-  try {
-    return localStorage.getItem(APP_STORAGE_KEY) !== null;
-  } catch {
-    return false;
-  }
-}
-
-export { save, load, clear, validate, hasData };
+export { save, load, clear };

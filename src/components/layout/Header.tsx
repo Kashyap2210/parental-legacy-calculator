@@ -1,14 +1,19 @@
 import clsx from "clsx";
+import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi2";
 
 interface HeaderProps {
   title?: string;
   subtitle?: string;
+  isDark?: boolean;
+  onToggleTheme?: () => void;
   className?: string;
 }
 
 function Header({
   title = "Parental Legacy Calculator",
   subtitle,
+  isDark = false,
+  onToggleTheme,
   className,
 }: HeaderProps) {
   return (
@@ -31,6 +36,32 @@ function Header({
             </span>
           )}
         </div>
+
+        {onToggleTheme && (
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            role="switch"
+            aria-checked={isDark}
+            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            className={clsx(
+              "inline-flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition-colors",
+              "hover:bg-surface-muted hover:text-text",
+              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500",
+            )}
+          >
+            <span
+              className="transition-transform duration-300"
+              style={{ transform: isDark ? "rotate(0deg)" : "rotate(180deg)" }}
+            >
+              {isDark ? (
+                <HiOutlineMoon className="h-5 w-5" />
+              ) : (
+                <HiOutlineSun className="h-5 w-5" />
+              )}
+            </span>
+          </button>
+        )}
       </div>
     </header>
   );

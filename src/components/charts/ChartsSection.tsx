@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import clsx from "clsx";
 import type { CalculationResult } from "@/types/calculator";
+import { useTheme } from "@/hooks/useTheme";
 import { buildBarChartData, buildPieChartData } from "@/utils/chartData";
 import ChartCard from "@/components/charts/ChartCard";
 import GroupedBarChart from "@/components/charts/GroupedBarChart";
@@ -14,14 +15,16 @@ interface ChartsSectionProps {
 }
 
 function ChartsSection({ results, className }: ChartsSectionProps) {
+  const { theme } = useTheme();
+
   const barData = useMemo(
     () => (results ? buildBarChartData(results.factors) : []),
     [results],
   );
 
   const pieData = useMemo(
-    () => (results ? buildPieChartData(results.totals) : []),
-    [results],
+    () => (results ? buildPieChartData(results.totals, theme) : []),
+    [results, theme],
   );
 
   if (!results) {

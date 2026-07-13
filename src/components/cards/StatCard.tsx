@@ -18,14 +18,14 @@ const accentStyles: Record<
   { bg: string; text: string; icon: string }
 > = {
   primary: {
-    bg: "bg-primary-50",
-    text: "text-primary-700",
-    icon: "text-primary-500",
+    bg: "bg-primary-50 dark:bg-primary-900/50",
+    text: "text-primary-700 dark:text-primary-300",
+    icon: "text-primary-500 dark:text-primary-400",
   },
   secondary: {
-    bg: "bg-secondary-50",
-    text: "text-secondary-700",
-    icon: "text-secondary-500",
+    bg: "bg-secondary-50 dark:bg-secondary-900/50",
+    text: "text-secondary-700 dark:text-secondary-300",
+    icon: "text-secondary-500 dark:text-secondary-400",
   },
   neutral: {
     bg: "bg-surface-muted",

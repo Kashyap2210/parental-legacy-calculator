@@ -7,7 +7,8 @@ import {
   Legend,
   LabelList,
 } from "recharts";
-import { THEME } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
+import { getThemeColors } from "@/constants/theme";
 import type { PieChartDataPoint } from "@/utils/chartData";
 import ChartTooltip from "@/components/charts/ChartTooltip";
 
@@ -19,6 +20,9 @@ interface ParentSharePieChartProps {
 const TOTAL_DECIMALS = 1;
 
 function ParentSharePieChart({ data, className }: ParentSharePieChartProps) {
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+
   const total = data.reduce((sum, item) => sum + item.value, 0);
 
   const percentFormatter = (value: number): string =>
@@ -51,7 +55,7 @@ function ParentSharePieChart({ data, className }: ParentSharePieChartProps) {
                 style={{
                   fontSize: 12,
                   fontWeight: 600,
-                  fill: THEME.colors.text,
+                  fill: colors.chart.legendText,
                 }}
               />
             </Pie>

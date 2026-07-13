@@ -8,7 +8,8 @@ import {
   Legend,
   Bar,
 } from "recharts";
-import { THEME } from "@/constants/theme";
+import { useTheme } from "@/hooks/useTheme";
+import { getThemeColors } from "@/constants/theme";
 import type { BarChartDataPoint } from "@/utils/chartData";
 import ChartTooltip from "@/components/charts/ChartTooltip";
 
@@ -20,6 +21,9 @@ interface GroupedBarChartProps {
 const FORMATTER = (value: number): string => value.toFixed(3);
 
 function GroupedBarChart({ data, className }: GroupedBarChartProps) {
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+
   return (
     <div className={className}>
       <div className="h-80 md:h-96 lg:h-[420px]">
@@ -30,19 +34,19 @@ function GroupedBarChart({ data, className }: GroupedBarChartProps) {
           >
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke={THEME.colors.chart.grid}
+              stroke={colors.chart.grid}
               vertical={false}
             />
             <XAxis
               dataKey="name"
-              tick={{ fontSize: 12, fill: THEME.colors.text }}
+              tick={{ fontSize: 12, fill: colors.text }}
               angle={-35}
               textAnchor="end"
               interval={0}
               height={80}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: THEME.colors.text }}
+              tick={{ fontSize: 12, fill: colors.text }}
               tickFormatter={FORMATTER}
             />
             <Tooltip content={<ChartTooltip formatter={FORMATTER} />} />
@@ -50,14 +54,14 @@ function GroupedBarChart({ data, className }: GroupedBarChartProps) {
             <Bar
               dataKey="mother"
               name="Mother"
-              fill={THEME.colors.chart.mother}
+              fill={colors.chart.mother}
               radius={[4, 4, 0, 0]}
               animationDuration={800}
             />
             <Bar
               dataKey="father"
               name="Father"
-              fill={THEME.colors.chart.father}
+              fill={colors.chart.father}
               radius={[4, 4, 0, 0]}
               animationDuration={800}
             />

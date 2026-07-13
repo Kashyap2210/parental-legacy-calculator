@@ -1,12 +1,15 @@
 import type { ReactNode } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { useTheme } from "@/hooks/useTheme";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 function Layout({ children }: LayoutProps) {
+  const { isDark, toggleTheme } = useTheme();
+
   return (
     <div className="flex min-h-screen flex-col bg-surface">
       <a
@@ -15,7 +18,7 @@ function Layout({ children }: LayoutProps) {
       >
         Skip to content
       </a>
-      <Header subtitle="v1.0" />
+      <Header subtitle="v1.0" isDark={isDark} onToggleTheme={toggleTheme} />
       <main id="main-content" className="flex-1">
         {children}
       </main>

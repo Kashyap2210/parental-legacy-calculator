@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { THEME } from "@/constants/theme";
 
 interface TooltipPayloadItem {
   name: string;
@@ -29,10 +28,9 @@ function ChartTooltip({
   return (
     <div
       className={clsx(
-        "rounded-lg border bg-surface px-3 py-2 shadow-md",
+        "rounded-lg border border-border bg-surface px-3 py-2 shadow-md",
         "text-sm",
       )}
-      style={{ borderColor: THEME.colors.border }}
       role="tooltip"
     >
       {label && <p className="mb-1 font-semibold text-text-primary">{label}</p>}
