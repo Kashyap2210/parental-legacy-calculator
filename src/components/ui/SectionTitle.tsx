@@ -1,6 +1,7 @@
 import clsx from "clsx";
 
 interface SectionTitleProps {
+  id?: string;
   title: string;
   description?: string;
   align?: "left" | "center";
@@ -8,6 +9,7 @@ interface SectionTitleProps {
 }
 
 function SectionTitle({
+  id,
   title,
   description,
   align = "left",
@@ -21,7 +23,10 @@ function SectionTitle({
         className,
       )}
     >
-      <h2 className="text-2xl font-bold tracking-tight text-text sm:text-3xl">
+      <h2
+        id={id}
+        className="text-2xl font-bold tracking-tight text-text sm:text-3xl"
+      >
         {title}
       </h2>
       {description && (

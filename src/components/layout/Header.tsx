@@ -12,10 +12,7 @@ function Header({
   className,
 }: HeaderProps) {
   return (
-    <header
-      role="banner"
-      className={clsx("border-b border-border bg-surface", className)}
-    >
+    <header className={clsx("border-b border-border bg-surface", className)}>
       <div className="mx-auto flex h-16 max-w-[var(--container-max)] items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
           <a

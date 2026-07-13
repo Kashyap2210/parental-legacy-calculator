@@ -21,8 +21,7 @@ function LoadingSkeleton({
         variant === "text" && "h-4 w-3/4",
         className,
       )}
-      role="progressbar"
-      aria-label="Loading"
+      role="status"
     />
   );
 }

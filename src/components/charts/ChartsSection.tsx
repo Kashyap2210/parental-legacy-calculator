@@ -5,6 +5,7 @@ import { buildBarChartData, buildPieChartData } from "@/utils/chartData";
 import ChartCard from "@/components/charts/ChartCard";
 import GroupedBarChart from "@/components/charts/GroupedBarChart";
 import ParentSharePieChart from "@/components/charts/ParentSharePieChart";
+import SectionTitle from "@/components/ui/SectionTitle";
 import EmptyState from "@/components/ui/EmptyState";
 
 interface ChartsSectionProps {
@@ -39,14 +40,11 @@ function ChartsSection({ results, className }: ChartsSectionProps) {
   return (
     <section aria-labelledby="charts-heading">
       <div className={clsx("space-y-6", className)}>
-        <div id="charts-heading" className="space-y-1">
-          <h2 className="text-2xl font-bold tracking-tight text-text sm:text-3xl">
-            Visualizations
-          </h2>
-          <p className="text-base text-text-secondary">
-            Graphical breakdown of parental influence across life factors.
-          </p>
-        </div>
+        <SectionTitle
+          id="charts-heading"
+          title="Visualizations"
+          description="Graphical breakdown of parental influence across life factors."
+        />
 
         <ChartCard
           title="Factor Comparison"

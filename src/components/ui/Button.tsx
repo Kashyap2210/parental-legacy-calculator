@@ -22,7 +22,7 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "h-8 px-3 text-sm gap-1.5",
+  sm: "h-12 px-4 text-sm gap-2",
   md: "h-10 px-4 text-sm gap-2",
   lg: "h-12 px-6 text-base gap-2.5",
 };
@@ -30,6 +30,7 @@ const sizeStyles: Record<ButtonSize, string> = {
 function Button({
   variant = "primary",
   size = "md",
+  type = "button",
   children,
   className,
   disabled,
@@ -37,6 +38,7 @@ function Button({
 }: ButtonProps) {
   return (
     <button
+      type={type}
       className={clsx(
         "inline-flex items-center justify-center rounded-lg font-medium transition-colors",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500",

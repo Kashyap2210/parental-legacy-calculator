@@ -45,31 +45,36 @@ function StatCard({
   const accent = accentStyles[accentColor];
 
   return (
-    <Card padding="lg" className={clsx("relative overflow-hidden", className)}>
-      {icon && (
-        <div
-          className={clsx(
-            "mb-3 flex h-10 w-10 items-center justify-center rounded-lg",
-            accent.bg,
-          )}
-          aria-hidden="true"
-        >
-          <span className={clsx("text-xl", accent.icon)}>{icon}</span>
-        </div>
-      )}
-      <dt className="text-sm font-medium text-text-secondary">{title}</dt>
-      <dd
-        className={clsx("mt-1 text-3xl font-bold tracking-tight", accent.text)}
-      >
-        {loading ? (
-          <span
-            className="inline-block h-8 w-20 animate-skeleton rounded bg-surface-muted"
-            aria-label="Loading value"
-          />
-        ) : (
-          value
+    <Card padding="lg" className={className}>
+      <dl>
+        {icon && (
+          <div
+            className={clsx(
+              "mb-3 flex h-10 w-10 items-center justify-center rounded-lg",
+              accent.bg,
+            )}
+            aria-hidden="true"
+          >
+            <span className={clsx("text-xl", accent.icon)}>{icon}</span>
+          </div>
         )}
-      </dd>
+        <dt className="text-sm font-medium text-text-secondary">{title}</dt>
+        <dd
+          className={clsx(
+            "mt-1 text-3xl font-bold tracking-tight tabular-nums",
+            accent.text,
+          )}
+        >
+          {loading ? (
+            <span
+              className="inline-block h-8 w-20 animate-skeleton rounded bg-surface-muted"
+              aria-label="Loading value"
+            />
+          ) : (
+            value
+          )}
+        </dd>
+      </dl>
     </Card>
   );
 }

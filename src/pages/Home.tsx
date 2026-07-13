@@ -84,6 +84,7 @@ function Home() {
       <section aria-labelledby="calculator-heading">
         <Container>
           <SectionTitle
+            id="calculator-heading"
             title="Legacy Calculator"
             description="Select a date of birth to calculate the legacy report."
             className="mb-8"
@@ -111,6 +112,7 @@ function Home() {
         <section aria-labelledby="results-heading">
           <Container>
             <SectionTitle
+              id="results-heading"
               title="Results"
               description="Breakdown of life factors by parental influence."
               className="mb-8"
@@ -119,6 +121,9 @@ function Home() {
             <Card variant="default" padding="none" className="overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
+                  <caption className="sr-only">
+                    Factor breakdown by parental influence
+                  </caption>
                   <thead>
                     <tr className="border-b border-border bg-surface-muted">
                       <th
@@ -187,69 +192,77 @@ function Home() {
         <section aria-labelledby="summary-heading">
           <Container>
             <SectionTitle
+              id="summary-heading"
               title="Summary"
               description="Aggregated legacy totals and dominant parental influence."
               className="mb-8"
             />
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <StatCard
-                title="Mother Total"
-                value={results.totals.mother.toFixed(3)}
-                icon={<HiOutlineUser />}
-                accentColor="primary"
-              />
-              <StatCard
-                title="Father Total"
-                value={results.totals.father.toFixed(3)}
-                icon={<HiOutlineUser />}
-                accentColor="secondary"
-              />
-              <StatCard
-                title="Grand Total"
-                value={results.totals.grand.toFixed(3)}
-                icon={<HiOutlineUsers />}
-                accentColor="neutral"
-              />
-              <StatCard
-                title="Dominant Parent"
-                value={
-                  results.dominantParent === "mother" ? "Mother" : "Father"
-                }
-                icon={<HiOutlineScale />}
-                accentColor={
-                  results.dominantParent === "mother" ? "primary" : "secondary"
-                }
-              />
-              <StatCard
-                title="Difference"
-                value={results.totals.difference.toFixed(3)}
-                icon={<HiOutlineArrowTrendingUp />}
-                accentColor="neutral"
-              />
-              {storedCalculation && (
+            <div aria-live="polite">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <StatCard
-                  title="Last Calculated"
-                  value={formatTimestamp(storedCalculation.timestamp)}
-                  icon={<HiOutlineClock />}
+                  title="Mother Total"
+                  value={results.totals.mother.toFixed(3)}
+                  icon={<HiOutlineUser />}
+                  accentColor="primary"
+                />
+                <StatCard
+                  title="Father Total"
+                  value={results.totals.father.toFixed(3)}
+                  icon={<HiOutlineUser />}
+                  accentColor="secondary"
+                />
+                <StatCard
+                  title="Grand Total"
+                  value={results.totals.grand.toFixed(3)}
+                  icon={<HiOutlineUsers />}
                   accentColor="neutral"
                 />
+                <StatCard
+                  title="Dominant Parent"
+                  value={
+                    results.dominantParent === "mother" ? "Mother" : "Father"
+                  }
+                  icon={<HiOutlineScale />}
+                  accentColor={
+                    results.dominantParent === "mother"
+                      ? "primary"
+                      : "secondary"
+                  }
+                />
+                <StatCard
+                  title="Difference"
+                  value={results.totals.difference.toFixed(3)}
+                  icon={<HiOutlineArrowTrendingUp />}
+                  accentColor="neutral"
+                />
+                {storedCalculation && (
+                  <StatCard
+                    title="Last Calculated"
+                    value={formatTimestamp(storedCalculation.timestamp)}
+                    icon={<HiOutlineClock />}
+                    accentColor="neutral"
+                  />
+                )}
+              </div>
+
+              {storedCalculation && (
+                <div className="mt-6">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleReset}
+                    aria-label="Reset calculator and clear saved session"
+                  >
+                    <HiOutlineArrowPath
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                    Start Over
+                  </Button>
+                </div>
               )}
             </div>
-
-            {storedCalculation && (
-              <div className="mt-6">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleReset}
-                  aria-label="Reset calculator and clear saved session"
-                >
-                  <HiOutlineArrowPath className="h-4 w-4" aria-hidden="true" />
-                  Start Over
-                </Button>
-              </div>
-            )}
           </Container>
         </section>
       )}

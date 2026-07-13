@@ -95,19 +95,7 @@
   --container-max: 1100px;
 
   /* ── Transitions ── */
-  --animate-fade-in: fade-in 0.3s ease-out;
   --animate-skeleton: skeleton 1.5s ease-in-out infinite;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @keyframes skeleton {
@@ -130,6 +118,22 @@
   --text-muted: #94a3b8;
   --border-color: #e2e8f0;
   --border-hover: #cbd5e1;
+}
+
+/* ── Accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
 }
 
 /* ── Base Styles ── */
