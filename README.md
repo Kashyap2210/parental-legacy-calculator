@@ -77,11 +77,11 @@ src/
 │   ├── layout/         # Application shell (Header, Footer, Layout)
 │   └── ui/             # Reusable UI primitives (Badge, Button, Container, etc.)
 ├── constants/          # Static configuration (factor ranges, theme colors)
-├── hooks/              # Custom React hooks (useCalculator, useLocalStorage)
+├── hooks/              # Custom React hooks (useCalculator, useLocalStorage, useTheme)
 ├── pages/              # Route-level page components (Home)
-├── services/           # Low-level service modules (storage.service)
+├── services/           # Low-level service modules (storage.service, theme.service)
 ├── styles/             # Global styles and Tailwind CSS v4 theme configuration
-├── types/              # TypeScript type definitions
+├── types/              # TypeScript type definitions (calculator, storage, theme)
 ├── utils/              # Pure utility functions (calculator, normalizer, validators, etc.)
 ├── App.tsx             # Root component — composes Layout and Home
 ├── main.tsx            # Application entry point — renders App in StrictMode
@@ -97,13 +97,13 @@ src/
 | `components/forms/` | Form input components with label, description, and error support |
 | `components/layout/` | Application shell — header, footer, skip-link, and main content area |
 | `components/ui/` | Reusable UI primitives shared across the application |
-| `constants/` | Static configuration data that does not change at runtime |
-| `hooks/` | Custom React hooks that encapsulate stateful logic |
+| `constants/` | Static configuration data that does not change at runtime (factor ranges, theme colors) |
+| `hooks/` | Custom React hooks that encapsulate stateful logic (useCalculator, useLocalStorage, useTheme) |
 | `pages/` | Top-level page components orchestrating hooks, components, and data flow |
-| `services/` | Low-level service modules for external integrations (e.g., localStorage) |
+| `services/` | Low-level service modules for external integrations (localStorage, theme persistence) |
 | `styles/` | Global CSS, Tailwind v4 `@theme` configuration, and design tokens |
-| `types/` | TypeScript type definitions shared across the codebase |
-| `utils/` | Pure functions for calculations, data transformation, validation, and formatting |
+| `types/` | TypeScript type definitions shared across the codebase (calculator, storage, theme) |
+| `utils/` | Pure functions for calculations, data transformation, validation, formatting, and export (CSV, PDF) |
 
 ## Architecture
 
@@ -115,6 +115,7 @@ Home
 ├── useCalculator()
 │       │
 │       ├── validators.ts    (date validation)
+│       ├── date.ts          (date utilities)
 │       └── calculator.ts    (legacy calculation engine)
 │               │
 │               ├── factorRanges.ts   (factor definitions)
@@ -124,11 +125,23 @@ Home
 │       │
 │       └── storage.service.ts   (localStorage CRUD + validation)
 │
-└── Charts
+├── useTheme()
+│       │
+│       └── theme.service.ts     (theme persistence + media query)
+│
+├── Charts
+│       │
+│       ├── chartData.ts         (data transformation for Recharts)
+│       ├── GroupedBarChart      (mother vs. father comparison)
+│       ├── ParentSharePieChart  (overall percentage distribution)
+│       ├── ChartsSection        (orchestrates chart layout)
+│       ├── ChartCard            (wraps charts in Card component)
+│       └── ChartTooltip         (custom Recharts tooltip)
+│
+└── Export
         │
-        ├── chartData.ts         (data transformation for Recharts)
-        ├── GroupedBarChart      (mother vs. father comparison)
-        └── ParentSharePieChart  (overall percentage distribution)
+        ├── exportCsv.ts         (CSV file generation)
+        └── exportPdf.ts         (PDF report generation via jsPDF)
 ```
 
 ### Separation of Concerns
