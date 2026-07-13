@@ -1,7 +1,6 @@
 import {
   HiOutlineUser,
   HiOutlineUsers,
-  HiOutlineChartBar,
   HiOutlineScale,
   HiOutlineArrowTrendingUp,
 } from "react-icons/hi2";
@@ -11,6 +10,7 @@ import Card from "@/components/cards/Card";
 import Badge from "@/components/ui/Badge";
 import Input from "@/components/forms/Input";
 import StatCard from "@/components/cards/StatCard";
+import ChartsSection from "@/components/charts/ChartsSection";
 import { useCalculator } from "@/hooks/useCalculator";
 
 function Home() {
@@ -195,34 +195,10 @@ function Home() {
         </section>
       )}
 
-      {/* ── Charts Placeholder ── */}
-      <section aria-labelledby="charts-heading">
-        <Container>
-          <SectionTitle
-            title="Visualizations"
-            description="Charts and graphs will be added in a future phase."
-            className="mb-8"
-          />
-
-          <Card variant="outlined" padding="lg">
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div
-                className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-surface-muted"
-                aria-hidden="true"
-              >
-                <HiOutlineChartBar className="h-8 w-8 text-text-muted" />
-              </div>
-              <h3 className="text-lg font-semibold text-text">
-                Charts coming soon
-              </h3>
-              <p className="mt-1 max-w-sm text-sm text-text-muted">
-                Data visualizations including pie charts and bar graphs will be
-                implemented in the next phase.
-              </p>
-            </div>
-          </Card>
-        </Container>
-      </section>
+      {/* ── Charts Section ── */}
+      <Container>
+        <ChartsSection results={results} />
+      </Container>
     </div>
   );
 }
