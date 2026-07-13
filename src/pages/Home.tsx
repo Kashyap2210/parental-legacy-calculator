@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import {
   HiOutlineUser,
   HiOutlineUsers,
   HiOutlineScale,
   HiOutlineArrowTrendingUp,
+  HiOutlineClock,
+  HiOutlineArrowPath,
 } from "react-icons/hi2";
 import Container from "@/components/ui/Container";
 import SectionTitle from "@/components/ui/SectionTitle";
@@ -10,13 +13,47 @@ import Card from "@/components/cards/Card";
 import Badge from "@/components/ui/Badge";
 import Input from "@/components/forms/Input";
 import StatCard from "@/components/cards/StatCard";
+import Button from "@/components/ui/Button";
 import ChartsSection from "@/components/charts/ChartsSection";
 import { useCalculator } from "@/hooks/useCalculator";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { formatTimestamp } from "@/utils/date";
 
 function Home() {
-  const { selectedDate, results, errors, handleDateChange } = useCalculator();
+  const calculator = useCalculator();
+  const storage = useLocalStorage();
+
+  const { selectedDate, results, errors, handleDateChange, reset } = calculator;
+  const {
+    storedCalculation,
+    loading: storageLoading,
+    load: loadStorage,
+    save: saveStorage,
+    clear: clearStorage,
+  } = storage;
 
   const dateError = errors.length > 0 ? errors[0].message : undefined;
+
+  useEffect(() => {
+    if (storageLoading) return;
+
+    const saved = loadStorage();
+
+    if (saved) {
+      handleDateChange(saved.dob);
+    }
+  }, [storageLoading, loadStorage, handleDateChange]);
+
+  useEffect(() => {
+    if (selectedDate && results) {
+      saveStorage(selectedDate);
+    }
+  }, [selectedDate, results, saveStorage]);
+
+  const handleReset = () => {
+    reset();
+    clearStorage();
+  };
 
   return (
     <div className="space-y-16 py-12 sm:space-y-24 sm:py-20">
@@ -190,7 +227,29 @@ function Home() {
                 icon={<HiOutlineArrowTrendingUp />}
                 accentColor="neutral"
               />
+              {storedCalculation && (
+                <StatCard
+                  title="Last Calculated"
+                  value={formatTimestamp(storedCalculation.timestamp)}
+                  icon={<HiOutlineClock />}
+                  accentColor="neutral"
+                />
+              )}
             </div>
+
+            {storedCalculation && (
+              <div className="mt-6">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleReset}
+                  aria-label="Reset calculator and clear saved session"
+                >
+                  <HiOutlineArrowPath className="h-4 w-4" aria-hidden="true" />
+                  Start Over
+                </Button>
+              </div>
+            )}
           </Container>
         </section>
       )}

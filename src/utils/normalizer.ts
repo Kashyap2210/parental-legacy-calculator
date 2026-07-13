@@ -57,11 +57,8 @@ function normalizeFactors(rawFactors: RawFactorSplit[]): {
     factors.reduce((sum, f) => sum + f.mother, 0),
     DECIMAL_PLACES,
   );
-  const fatherTotal = roundTo(
-    factors.reduce((sum, f) => sum + f.father, 0),
-    DECIMAL_PLACES,
-  );
-  const grandTotal = roundTo(motherTotal + fatherTotal, DECIMAL_PLACES);
+  const fatherTotal = roundTo(100 - motherTotal, DECIMAL_PLACES);
+  const grandTotal = 100;
   const difference = roundTo(
     Math.abs(motherTotal - fatherTotal),
     DECIMAL_PLACES,
