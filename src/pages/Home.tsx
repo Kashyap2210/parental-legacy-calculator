@@ -6,6 +6,7 @@ import {
   HiOutlineArrowTrendingUp,
   HiOutlineClock,
   HiOutlineArrowPath,
+  HiOutlineDocumentArrowDown,
 } from "react-icons/hi2";
 import Container from "@/components/ui/Container";
 import SectionTitle from "@/components/ui/SectionTitle";
@@ -18,6 +19,8 @@ import ChartsSection from "@/components/charts/ChartsSection";
 import { useCalculator } from "@/hooks/useCalculator";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { formatTimestamp } from "@/utils/date";
+import { exportCsv } from "@/utils/exportCsv";
+import { exportPdf } from "@/utils/exportPdf";
 
 function Home() {
   const calculator = useCalculator();
@@ -53,6 +56,16 @@ function Home() {
   const handleReset = () => {
     reset();
     clearStorage();
+  };
+
+  const handleExportCsv = () => {
+    if (!results) return;
+    exportCsv({ results, selectedDate });
+  };
+
+  const handleExportPdf = () => {
+    if (!results) return;
+    exportPdf({ results, selectedDate });
   };
 
   return (
@@ -262,6 +275,38 @@ function Home() {
                   </Button>
                 </div>
               )}
+
+              <div className="mt-8">
+                <p className="mb-3 text-sm font-medium text-text-secondary">
+                  Export
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleExportCsv}
+                    aria-label="Export results as CSV file"
+                  >
+                    <HiOutlineDocumentArrowDown
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                    CSV
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleExportPdf}
+                    aria-label="Export results as PDF report"
+                  >
+                    <HiOutlineDocumentArrowDown
+                      className="h-4 w-4"
+                      aria-hidden="true"
+                    />
+                    PDF
+                  </Button>
+                </div>
+              </div>
             </div>
           </Container>
         </section>

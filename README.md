@@ -20,6 +20,8 @@ The application stores only the entered date and a timestamp in `localStorage`, 
 - **Reusable component system** — Modular UI primitives (`Button`, `Card`, `Badge`, `Container`, `Input`, `StatCard`) composed across the application
 - **Mobile-friendly design** — Responsive layout from mobile to desktop using Tailwind CSS utility classes
 - **Clean separation of concerns** — Business logic, storage, presentation, and data transformation are isolated into dedicated modules
+- **CSV export** — Download calculation results as a standards-compliant CSV file with UTF-8 encoding
+- **PDF report export** — Generate a formatted A4 PDF report with summary, factor breakdown, and page numbers
 
 ## Tech Stack
 
@@ -30,6 +32,7 @@ The application stores only the entered date and a timestamp in `localStorage`, 
 | Tailwind CSS v4 | Utility-first styling via `@tailwindcss/vite` plugin |
 | Recharts | Data visualization (bar chart, pie chart) |
 | localStorage | Client-side session persistence |
+| jsPDF | PDF report generation (dynamically loaded) |
 | Vite | Build tool and development server |
 | Vercel | Production deployment |
 
